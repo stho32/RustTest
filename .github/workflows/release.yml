@@ -11,7 +11,7 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
     - name: Set up Rust
       uses: actions-rs/toolchain@v1
@@ -31,7 +31,7 @@ jobs:
       run: strip ./RustTest/target/release/RustTest
 
     - name: Upload release asset
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       with:
         name: linux-release
         path: ./RustTest/target/release/RustTest
@@ -41,7 +41,7 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
     - name: Set up Rust
       uses: actions-rs/toolchain@v1
@@ -61,7 +61,7 @@ jobs:
       run: strip ./RustTest/target/release/RustTest.exe
 
     - name: Upload release asset
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       with:
         name: windows-release
         path: ./RustTest/target/release/RustTest.exe
@@ -72,7 +72,7 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
     - name: Get current date and time
       id: datetime
@@ -102,7 +102,7 @@ jobs:
         prerelease: false
 
     - name: Download Linux Release
-      uses: actions/download-artifact@v2
+      uses: actions/download-artifact@v3
       with:
         name: linux-release
         path: ./RustTest/target/release
@@ -118,7 +118,7 @@ jobs:
         asset_content_type: application/octet-stream
 
     - name: Download Windows Release
-      uses: actions/download-artifact@v2
+      uses: actions/download-artifact@v3
       with:
         name: windows-release
         path: ./RustTest/target/release
