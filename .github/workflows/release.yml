@@ -76,7 +76,17 @@ jobs:
 
     - name: Get current date and time
       id: datetime
-      run: echo "RELEASE_NAME=$(date +'%Y-%m-%d_%H-%M-%S')" >> $GITHUB_ENV
+      run: |
+        echo "RELEASE_NAME=$(date +'%Y-%m-%d_%H-%M-%S')" >> $GITHUB_ENV
+        echo "TAG_NAME=release-$(date +'%Y%m%d%H%M%S')" >> $GITHUB_ENV
+
+    - name: Create GitHub Tag
+      id: create_tag
+      run: |
+        git config user.name "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
+        git tag ${{ env.TAG_NAME }}
+        git push origin ${{ env.TAG_NAME }}
 
     - name: Create GitHub Release
       id: create_release
@@ -84,7 +94,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: ${{ github.sha }}
+        tag_name: ${{ env.TAG_NAME }}
         release_name: Release ${{ env.RELEASE_NAME }}
         body: |
           Release notes for ${{ env.RELEASE_NAME }}
